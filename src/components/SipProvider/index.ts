@@ -322,7 +322,7 @@ export default class SipProvider extends React.Component<
 
     try {
       const socket = new JsSIP.WebSocketInterface(
-        `wss://${host}:${port}${pathname}`,
+        `ws://${host}:${port}${pathname}`,
       );
       this.ua = new JsSIP.UA({
         uri: `sip:${user}@${host}`,
