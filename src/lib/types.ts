@@ -63,3 +63,15 @@ export const callPropType = PropTypes.shape({
   direction: PropTypes.string,
   counterpart: PropTypes.string,
 });
+
+export const sipContextPropType = {
+  sip: sipPropType,
+  call: callPropType,
+  registerSip: PropTypes.func,
+  unregisterSip: PropTypes.func,
+  answerCall: PropTypes.func,
+  startCall: PropTypes.func,
+  stopCall: PropTypes.func,
+};
+
+export type ContextType = PropTypes.InferType<typeof sipContextPropType>;

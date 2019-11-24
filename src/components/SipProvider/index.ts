@@ -25,13 +25,15 @@ import {
   SipStatus,
 } from "../../lib/enums";
 import {
-  callPropType,
   ExtraHeaders,
   extraHeadersPropType,
   IceServers,
   iceServersPropType,
-  sipPropType,
+  sipContextPropType,
+  ContextType,
 } from "../../lib/types";
+
+export const SipContext = React.createContext<ContextType>( {} );
 
 export default class SipProvider extends React.Component<
   {
@@ -58,16 +60,7 @@ export default class SipProvider extends React.Component<
     rtcSession;
   }
 > {
-  public static childContextTypes = {
-    sip: sipPropType,
-    call: callPropType,
-    registerSip: PropTypes.func,
-    unregisterSip: PropTypes.func,
-
-    answerCall: PropTypes.func,
-    startCall: PropTypes.func,
-    stopCall: PropTypes.func,
-  };
+  public static childContextTypes = sipContextPropType;
 
   public static propTypes = {
     host: PropTypes.string,
@@ -127,7 +120,7 @@ export default class SipProvider extends React.Component<
   public getChildContext() {
     return {
       sip: {
-        ...this.props,
+        ...(this.props as PropTypes.InferProps<typeof SipProvider.propTypes>),
         status: this.state.sipStatus,
         errorType: this.state.sipErrorType,
         errorMessage: this.state.sipErrorMessage,
@@ -544,6 +537,6 @@ export default class SipProvider extends React.Component<
   }
 
   public render() {
-    return this.props.children;
+    return React.createElement(SipContext.Provider,{value: this.getChildContext()},this.props.children)
   }
 }
