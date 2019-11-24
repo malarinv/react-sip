@@ -25,6 +25,7 @@ export interface Sip {
 
   host?: string;
   port?: number;
+  secure: boolean;
   user?: string;
   password?: string;
   autoRegister?: boolean;
@@ -41,6 +42,7 @@ export const sipPropType = PropTypes.shape({
 
   host: PropTypes.string,
   port: PropTypes.number,
+  secure: PropTypes.bool,
   user: PropTypes.string,
   password: PropTypes.string,
   autoRegister: PropTypes.bool,
